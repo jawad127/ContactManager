@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.SmartContactManager.dao.UserRepositiory;
 import com.SmartContactManager.entities.User;
+import com.SmartContactManager.help.Message;
 
 @Controller
 public class HomeController {
@@ -46,27 +47,34 @@ public class HomeController {
 
 	@PostMapping("/doRegister")
 	public String doRegister(@ModelAttribute User user,
-			Model model, @RequestParam boolean agreement,
+			Model model, @RequestParam(value="agreement",defaultValue = "false") boolean agreement,
 			HttpSession session) {
 
 		try {
 			
-			if(agreement) {
+			if(!agreement) {
 				
 				System.out.println("you have not agreed to the terms and conditions");
 				throw new Exception();
 			}
 			
-			
+			userRepositiory.save(user);
+			session.setAttribute("message", new Message("Successfully registered", "alert-success"));
+			model.addAttribute("user",new User());
+			return "signup";
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			session.setAttribute("message", new Message("Something went wrong!!" + e.getMessage(), "alert-error"));
+			model.addAttribute("user", user);
+			System.out.println(user);
+			e.printStackTrace();
+			
+
+			return "signup";
 		}
 		
-		model.addAttribute("user", user);
-		System.out.println(user);
-
-		return "signup";
+		
+		
 	}
 
 }
