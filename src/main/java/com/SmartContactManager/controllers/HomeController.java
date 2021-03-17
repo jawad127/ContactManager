@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.SmartContactManager.dao.UserRepositiory;
 import com.SmartContactManager.entities.User;
-import com.SmartContactManager.help.Message;
+import com.SmartContactManager.utility.Message;
 
 @Controller
 public class HomeController {
