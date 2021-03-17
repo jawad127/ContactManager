@@ -1,4 +1,4 @@
-package com.SmartContactManager.help;
+package com.SmartContactManager.utility;
 
 public class Message {
 	
