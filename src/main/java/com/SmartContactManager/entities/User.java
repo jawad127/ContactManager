@@ -12,6 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User {
@@ -19,9 +24,13 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Size(message = "username must be between 3-12 characters ")
 	private String name;
 	@Column(unique = true)
+	@Email(regexp = "/^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$/")
 	private String email;
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$"
+			,message = "password must be of atleast 8 chr and contain 1 digit , 1 uppercase and 1 special chr")
 	private String password;
 	private String role;
 	private boolean enabled;
