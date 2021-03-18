@@ -12,8 +12,8 @@
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<div class="my-card">
-					<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert "  role="alert">
-					<p th:text="${session.message.content}"></p></div>
+					<div th:if="${message}" th:classappend="${message.type}" class="alert "  role="alert">
+					<p th:text="${message.content}" class="text-center"></p></div>
 						<h1 class="text-center">Register here!!</h1>
 						
 						<form th:action="@{/doRegister}" class="mt-4" method="post">

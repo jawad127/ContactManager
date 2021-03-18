@@ -47,27 +47,27 @@ public class HomeController {
 
 	@PostMapping("/doRegister")
 	public String doRegister(@ModelAttribute User user,
-			Model model, @RequestParam(value="agreement",defaultValue = "false") boolean agreement,
-			HttpSession session) {
+			Model model, @RequestParam(value="agreement",defaultValue = "false") boolean agreement) {
 
 		try {
 			
 			if(!agreement) {
 				
 				System.out.println("you have not agreed to the terms and conditions");
-				throw new Exception();
+				throw new Exception("you have not agreed to the terms and conditions");
 			}
-			
+			user.setEnabled(true);
+			user.setRole("user");
 			userRepositiory.save(user);
-			session.setAttribute("message", new Message("Successfully registered", "alert-success"));
+			model.addAttribute("message", new Message("Successfully registered", "alert-success"));
 			model.addAttribute("user",new User());
 			return "signup";
 			
 		} catch (Exception e) {
-			session.setAttribute("message", new Message("Something went wrong!!" + e.getMessage(), "alert-error"));
+			model.addAttribute("message", new Message("Something went wrong - " + e.getMessage(), "alert-danger"));
 			model.addAttribute("user", user);
 			System.out.println(user);
-			e.printStackTrace();
+         	e.printStackTrace();
 			
 
 			return "signup";
