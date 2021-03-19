@@ -1,10 +1,12 @@
 package com.SmartContactManager.controllers;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,14 +41,14 @@ public class HomeController {
 	}
 
 	@GetMapping("/signup")
-	public String signUp(Model model) {
+	public String signUp(Model model ) {
 		model.addAttribute("title", "SignUp - Smart Contact Manager");
 		model.addAttribute("user", new User());
 		return "signup";
 	}
 
 	@PostMapping("/doRegister")
-	public String doRegister(@ModelAttribute User user,
+	public String doRegister(@Valid @ModelAttribute(value = "user") User user, BindingResult result,
 			Model model, @RequestParam(value="agreement",defaultValue = "false") boolean agreement) {
 
 		try {
@@ -55,6 +57,12 @@ public class HomeController {
 				
 				System.out.println("you have not agreed to the terms and conditions");
 				throw new Exception("you have not agreed to the terms and conditions");
+			}
+			
+			if(result.hasErrors()) {
+				System.out.println("erros : "+result.toString());
+				model.addAttribute("user", user);
+				return "signup";
 			}
 			user.setEnabled(true);
 			user.setRole("user");
