@@ -12,42 +12,28 @@
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
 					<div class="my-card">
-						<div th:if="${message}" th:classappend="${message.type}"
-							class="alert " role="alert">
-							<p th:text="${message.content}" class="text-center"></p>
-						</div>
+					<div th:if="${message}" th:classappend="${message.type}" class="alert "  role="alert">
+					<p th:text="${message.content}" class="text-center"></p></div>
 						<h1 class="text-center">Register here!!</h1>
-
-						<form th:action="@{/doRegister}" class="mt-4" method="post" th:object="${user}">
+						
+						<form th:action="@{/doRegister}" class="mt-4" method="post">
 							<div class="form-group">
 								<label for="feild_username">User Name</label> <input type="text"
-									class="form-control"
-									th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
-									id="feild_username" name="name" th:value="${user.name}"
-									aria-describedby="emailHelp" placeholder="Enter username"
-									>
-								<div  class="invalid-feedback"
-								th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
+									class="form-control" id="feild_username" name="name"
+									th:value="${user.name}" aria-describedby="emailHelp"
+									placeholder="Enter username" required>
 							</div>
 							<div class="form-group">
 								<label for="feild_email">Email address</label> <input
 									type="email" class="form-control" id="feild_email" name="email"
-									th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
 									th:value="${user.email}" aria-describedby="emailHelp"
-									placeholder="Enter email" >
-									
-									<div  class="invalid-feedback"
-								th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
-							
+									placeholder="Enter email" required>
 							</div>
 							<div class="form-group">
 								<label for="feild_password">Password</label> <input
 									type="password" name="password" class="form-control"
-									th:classappend="${#fields.hasErrors('password')?'is-invalid':''}"
 									id="feild_password" aria-describedby="passwordHelp"
-									placeholder="Enter password" >
-									<div  class="invalid-feedback"
-								th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
+									placeholder="Enter password" required>
 							</div>
 
 							<div class="form-group">
@@ -59,8 +45,8 @@
 
 							<div class="form-group form-check text-center">
 								<input type="checkbox" name="agreement" class="form-check-input"
-									id="agreement" /> <label>i agree to the terms and
-									conditions.</label>
+									id="agreement" /> <label>i agree to the terms
+									and conditions.</label>
 
 							</div>
 							<div class="container text-center">
